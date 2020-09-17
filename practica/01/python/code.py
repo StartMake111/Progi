@@ -1,8 +1,8 @@
-// 1 zadanie
+# 1 zadanie
 
 print ('Resultat virasenia 2+2*2 ='), (2+2*2)
 
-// 2, 3
+# 2, 3
 
 a = 3
 b = 3.14
@@ -10,7 +10,7 @@ print (a)
 print (b)
 print (a+b, a-b,a*b, a/b )
 
-// 4
+# 4
 
 a = int(input())
 b = int(input())
@@ -28,7 +28,7 @@ b = c
 
 print(a, b)
 
-// 5
+# 5
 
 print ('Vvedi skorost, vremya, x')
 
