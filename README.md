@@ -1,1 +1,2 @@
 # Progi
+laba gotova
