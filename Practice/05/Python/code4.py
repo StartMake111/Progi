@@ -8,5 +8,5 @@ g = 9.8
 
 S = x + v*t - ((g*t*t)/2)
 
-print (S)
+print (abs(S))
 

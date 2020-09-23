@@ -12,7 +12,7 @@ int main(){
 
     S = x0+ v*t - ((g*t*t)/2);
 
-    cout << S << endl;
+    cout << abs(S) << endl;
 
     return 0;
 
