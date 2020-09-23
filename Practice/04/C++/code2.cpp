@@ -7,14 +7,15 @@ int main()
 
     int a, b, d;
 
-    d = a, a = b, b = d;
-    cout << a << endl << b << endl;
-    
-    a = a+b;
-    b = a-b;
-    a = a-b;
+    cin >> a >> b;
 
-    cout << a << endl << b << endl;
+    d = a, a = b, b = d;
+    cout << a << ' '<< b << endl;
+    
+    swap (a, b);   
+
+
+    cout << a << ' ' << b << endl;
 
 
 
