@@ -4,6 +4,9 @@ using namespace std;
 int main(){
     int a,k=0;
     cin>>a;
+    if (a>pow(10,9) or a<1){
+        return 0;
+    }
 if ((a==1) or (a==0) or (a > pow(10, 9))){
     return 0;
 }
