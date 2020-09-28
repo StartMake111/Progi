@@ -4,7 +4,6 @@ import random
 print('Здоровеньки булы')
 A = random.randint(0,100)
 a=0
-print(A)
 while (True):
     N = int(input())
     if N > A :
