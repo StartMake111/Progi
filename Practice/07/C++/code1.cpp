@@ -14,7 +14,7 @@ int main(){
     if (a==1){
         cout << "Vvedi storoni treugolnika cherez probel : ";
         cin >> a >> b >> c;
-        if (a==0 or b==0 or c==0){
+        if (a==0 or b==0 or c==0 or a + b > c or a+c>b or c+b > a){
             cout << "Это не треугольник" << endl;
             return 0;
         }
