@@ -9,7 +9,7 @@ if a == 1 :
     x = int(input())
     y = int(input())
     z = int(input())
-    if x==0 or y==0 or z==0 :
+    if x==0 or y==0 or z==0 or x + y > z or x+z>y or z+y > x :
         print('Это не треугольник')
         exit(0)
     if x < 0 or y < 0 or z < 0 :
