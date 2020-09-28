@@ -7,7 +7,6 @@ int main(){
     int N, a=0, p;
     srand(time(NULL));
     int A = rand() %101;
-    cout << A;
 while (true){
     cin >> N;
     if (N > A) {
