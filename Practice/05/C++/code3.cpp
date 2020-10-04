@@ -6,13 +6,13 @@ using namespace std;
 int main(){
 
 
-    double g=9.8, v, t ,S, x0;
+    double g=9.8, v, t ,Xt, x0;
 
     cout << "Vvedi koordinatu, skorost, vremya cheres probel : "; cin >> x0 >> v >> t;
 
-    S = x0+ v*t - ((g*t*t)/2);
+    Xt = x0+ v*t - ((g*t*t)/2);
 
-    cout << abs(S) << endl;
+    cout << abs(Xt) << endl;
 
     return 0;
 
