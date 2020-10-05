@@ -12,7 +12,7 @@ int main(){
 
     Xt = x0+ v*t - ((g*t*t)/2);
 
-    cout << abs(Xt) << endl;
+    cout << abs(Xt-x0) << endl;
 
     return 0;
 
