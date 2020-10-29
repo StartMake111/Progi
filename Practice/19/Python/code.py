@@ -1,14 +1,23 @@
-import itertools
-x = int(input())
-a = input()
-b = []
-if len(str(a)) < x :
-    a = list(a)
-    a += a[0]
-    a = ''.join(map(str, a))
-result = [item for item in itertools.permutations(a,x)]
-for i in result:
-    for j in range(len(i)):
-        b += i[j]
-    print(''.join(map(str,b)), sep=' ', end= ' ')
-    b.clear()
+import itertools as it
+otvet = []
+dlinna = int(input())
+slovo = input()
+slovo = list(slovo)
+lk = len(slovo)
+op = []
+if dlinna > len(slovo):
+    lish = dlinna - len(slovo)
+    b = list(it.permutations(slovo, lish))
+    for i in b:
+        for j in i:
+            slovo.append(j)
+        a = [el for el in it.permutations(slovo, dlinna)]
+        for i in range (len(a)):
+            otvet.append(''.join(map(str, a[i])))
+        del slovo[lk::]
+    h = list(set(otvet))
+    for g in range(len(h)):
+        print(h[g], end=' ')
+else:
+    for i in list(it.permutations(slovo, dlinna)):
+        print(''.join(map(str, i)), end=' ')
