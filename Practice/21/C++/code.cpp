@@ -15,6 +15,8 @@ void printBMI(double BMI){
 }
 int main()
 {
-    do
+    double wieght, height;
+    cin >> wieght >> height;
+    printBMI(BMI(wieght,height));
     return 0;
 }
