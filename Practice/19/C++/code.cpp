@@ -20,10 +20,6 @@ int main(){
   
   while (i < len){
     el_el = kombi[i];
-    while(el_el != 0){
-        res.push_back((el_el % len))
-    }
-
   }
 
 
