@@ -13,14 +13,13 @@ int main(){
     
     // sin
     cout << "\n" << 'x' << "\t" << "sin(x)" << endl;
-    for (double x = 0; x <= pi / 4; x += pi/180)
+    for (double x = 0; x <= pi / 4; x += pi / 180)
     {
         cout.precision(4);
-        cout << x <<"\t" << sinus(5,x) << endl;
+        cout << x <<"\t" << sinus(x,5) << endl;
     }
 
     // C
     cout << "\n" << 'k' << "\t" << "C(k,10)" << endl;
     for (int i = 1; i < 11; i++) cout << i <<"\t" << C(10,i) << endl;
-    cout << pow(-1, 2) * pow(0.733, 2*2+1)/ (fact(2*2+1));
 };
