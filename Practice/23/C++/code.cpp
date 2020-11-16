@@ -18,7 +18,7 @@ int main(){
         cout.precision(4);
         cout << x <<"\t" << sinus(x,5) << endl;
     }
-
+    
     // C
     cout << "\n" << 'k' << "\t" << "C(k,10)" << endl;
     for (int i = 1; i < 11; i++) cout << i <<"\t" << C(10,i) << endl;
