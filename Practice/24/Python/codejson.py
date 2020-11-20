@@ -4,12 +4,12 @@ with open('in.json', 'r') as f:
 vivod = []
 
 for zadacha in j:
-    userID = zadacha['usedId']
+    userID = zadacha['userId']
     complited = zadacha['completed']
 
     check = None
     for cheloveck in vivod:
-        if cheloveck[userID] == userID:
+        if cheloveck['userId'] == userID:
             check = cheloveck
             break
     
