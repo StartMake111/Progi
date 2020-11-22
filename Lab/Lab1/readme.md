@@ -65,7 +65,7 @@ http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=[{API key}](http
 
 Для получения прогноза погоды для Симферополя с почасовым интервалом необходимо отправить запрос : /data/2.5/onecall?lat=44.9698623&lon=34.1329217&exclude=current,minutely,daily,alerts&units=metric&lang=ru&appid={API key}
 
-![Рис. 1.1](./Pic/Pic1.png)
+![Рис. 1.1](./Pic/Pic1.jpg)
 
 <center> <i> Рисунок 1.1. Полученный запрос с сайта. </center>
 
