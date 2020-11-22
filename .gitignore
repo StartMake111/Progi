@@ -29,3 +29,15 @@
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,visualstudiocode
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+.gitignore
