@@ -72,7 +72,7 @@ http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=[{API key}](http
 ### Задание 2
 
 Чтобы получить текущее время в формате json необходимо отправить запрос на сайт worldtimeapi.org. 
-Запрос для получение Симферопольского время будет выглядеть так : http://worldtimeapi.org/api,timezone,Europe,Simferopol.
+Запрос для получение Симферопольского время будет выглядеть так : http://worldtimeapi.org/api/timezone/Europe/Simferopol.
 
 ### Полный исходный код серверного приложения:
 
@@ -212,9 +212,9 @@ top_frame.pack(side=TOP, fill=X)
 middle_frame.pack(expand=True, fill=BOTH)
 bottom_frame.pack(side=BOTTOM, fill=X)
 
-city = Label(top_frame, font=("Calibri Bold", 12), text="Симферополь", bg=_yellow)
-desc = Label(top_frame, font=("Calibri", 12), bg=_yellow)
-temp = Label(middle_frame, font=("Impact", 48), bg=_white)
+city = Label(top_frame, font=("Calibri Bold", 12), text="Симферополь", bg=_yellow, slant = 'Times New Toman')
+desc = Label(top_frame, font=("Calibri", 12), bg=_yellow, slant = 'Times New Toman')
+temp = Label(middle_frame, font=("Impact", 48), bg=_white, slant = 'Times New Toman')
 
 city.pack(pady=0)
 desc.pack(pady=0)
@@ -225,6 +225,7 @@ root.mainloop()
 ```
 
 Скриншот графического интерфейса:
+
 ![Рис. 1.1](./Pic/pic2.png)
 
 <center> <i> Рисунок 1.2. Графический интерфейс. </center>

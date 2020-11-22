@@ -30,9 +30,9 @@ top_frame.pack(side=TOP, fill=X)
 middle_frame.pack(expand=True, fill=BOTH)
 bottom_frame.pack(side=BOTTOM, fill=X)
 
-city = Label(top_frame, font=("Calibri Bold", 12), text="Симферополь", bg=_yellow)
-desc = Label(top_frame, font=("Calibri", 12), bg=_yellow)
-temp = Label(middle_frame, font=("Impact", 48), bg=_white)
+city = Label(top_frame, font=("Calibri Bold", 12), text="Симферополь", bg=_yellow, slant = 'Times New Toman')
+desc = Label(top_frame, font=("Calibri", 12), bg=_yellow, slant = 'Times New Toman')
+temp = Label(middle_frame, font=("Impact", 48), bg=_white, slant = 'Times New Toman')
 
 city.pack(pady=0)
 desc.pack(pady=0)
