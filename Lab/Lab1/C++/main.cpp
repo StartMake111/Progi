@@ -50,7 +50,7 @@ bool cachejson(json ca){
   return true;
 }
 json get_time(){
-  auto time = timez.Get("/api,timezone,Europe,Simferopol");
+  auto time = timez.Get("/api/timezone/Europe/Simferopol");
   if (!time){
     return("Err");
     return json::object();
