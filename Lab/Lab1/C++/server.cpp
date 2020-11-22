@@ -5,9 +5,13 @@
 #include <ctime>
 #include "Include/cpp-httplib/httplib.h"
 #include "Include/nlohman/json.hpp"
-#include "main.cpp"
 using json = nlohmann::json;
 using namespace httplib;
+json get_json();
+json get_cache();
+json get_hourly_request(json &hourly);
+bool cachejson(json ca);
+json get_time();
 void findandreplace(std::string & data, std::string toSearch, std::string replaceStr){
     size_t pos = data.find(toSearch);
     while(pos != std::string::npos){
@@ -34,9 +38,9 @@ void responce(const Request &req, Response &res){
             return;
         }
     }
-    string tamplname = "templ.html";
-    ifstream tamplate(tamplname);
-    string str;
+    std::string tamplname = "templ.html";
+    std::ifstream tamplate(tamplname);
+    std::string str;
     if (tamplate.is_open()){
         getline(tamplate,str, '\0');
         tamplate.close();
@@ -47,7 +51,7 @@ void responce(const Request &req, Response &res){
     }
     findandreplace(str, "{hourly[i].weather[0].description}", prognoz1["weather"][0]["description"]);
     findandreplace(str, "{hourly[i].weather[0].icon}", prognoz1["weather"][0]["icon"]);
-    findandreplace(str, "{hourly[i].temp}", to_string(int(round(prognoz1["temp"].get<double>()))));
+    findandreplace(str, "{hourly[i].temp}", std::to_string(int(round(prognoz1["temp"].get<double>()))));
     res.set_content(str, "text,html");
 }
 void responceraw(const Request &req, Response &res){
@@ -70,9 +74,9 @@ void responceraw(const Request &req, Response &res){
             return;
         }
     cachejson(body2);
-    string tamplname = "templ.html";
-    ifstream tamplate(tamplname);
-    string str;
+    std::string tamplname = "templ.html";
+    std::ifstream tamplate(tamplname);
+    std::string str;
     if (tamplate.is_open()){
         getline(tamplate,str, '\0');
         tamplate.close();

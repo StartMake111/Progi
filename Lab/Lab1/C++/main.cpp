@@ -5,14 +5,12 @@
 #include <string>
 #include <ctime>
 #include <fstream>
-#include <string>
 using json = nlohmann::json;
 using namespace httplib;
 using namespace std;
 
 Client cli("http://api.openweathermap.org");
 Client timez("http://worldtimeapi.org");
-int main();
 
 json get_json(){
   auto res = cli.Get("/data/2.5/onecall?lat=44.9698623&lon=34.1329217&exclude=current,minutely,daily,alerts&units=metric&lang=ru&appid=e1f4f9f81642622cc21d70a6baf981e5");
