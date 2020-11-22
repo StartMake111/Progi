@@ -65,6 +65,10 @@ http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=[{API key}](http
 
 Для получения прогноза погоды для Симферополя с почасовым интервалом необходимо отправить запрос : /data/2.5/onecall?lat=44.9698623&lon=34.1329217&exclude=current,minutely,daily,alerts&units=metric&lang=ru&appid={API key}
 
+![Рис. 1.1](./Pic/Pic1.png)
+
+<center> <i> Рисунок 1.1. Полученный запрос с сайта. </center>
+
 ### Задание 2
 
 Чтобы получить текущее время в формате json необходимо отправить запрос на сайт worldtimeapi.org. 
@@ -182,7 +186,7 @@ import requests
 
 def reload_data(event=None):
 	try:
-		response = requests.get('http://localhost:3000/raw').content.decode("utf8")
+		response = requests.get('http://localhost:1074/raw').content.decode("utf8")
 		forecast_j = json.loads(response)
 
 		desc.config(text=str(forecast_j["description"]))
@@ -220,6 +224,10 @@ reload_data()
 root.mainloop()
 ```
 
+Скриншот графического интерфейса:
+![Рис. 1.1](./Pic/pic2.png)
+
+<center> <i> Рисунок 1.2. Графический интерфейс. </center>
 
 
 ## Вывод по работе. 
