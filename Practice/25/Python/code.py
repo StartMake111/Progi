@@ -6,8 +6,8 @@ def BozoSort(mass, des = True):
     if type(mass[0]) == list:
         for elem in mass:
             result += elem
-    else :
-        result = mass
+    else:
+        result = mass.copy()
     n = len(result)
     while(is_sorted(result, des) == False):
         for i in range(n-1):
@@ -44,7 +44,7 @@ for elem in na:
     i +=1
     if i% math.sqrt(n) == 0:
         matrica.append(stroka)
-        row = []
+        stroka = []
         i = 0
 del stroka, i
 del(na[n::])
@@ -55,4 +55,3 @@ print(' '.join(map(str, BozoSort(matrica))))
 print(' '.join(map(str, BozoSort(matrica, False))))
 print(' '.join(map(str, BozoSortF3(na[0],na[1],na[2]))))
 print(' '.join(map(str, BozoSortF3(na[0],na[1],na[2],False))))
-print(na)
