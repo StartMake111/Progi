@@ -1,4 +1,4 @@
-#include <iostream>
+z#include <iostream>
 #include <fstream>
 #include <vector>
 #include <filesystem>
@@ -26,49 +26,8 @@ void gen_responceMute(const Request& req, Response& res){
 	std::string str= u8R"(
 		{
 			"response":{
-					"text": "Здравствуйте, чем могу помочь?",
-					"tts":"Здр+авств+уйте, чем могу помочь?",
-					"buttons":[
-						{
-							"title" : "Молчать",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Говорить",
-							"payload":{},
-							"hide": false
-						},
-						{
-							"title" : "Помощь",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Очистить корзину",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Добавить в корзину",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Удалить из корзины",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Что в корзине",
-							"payload":{},
-							"hide": true
-						},
-						{
-							"title" : "Сумма",
-							"payload":{},
-							"hide": true
-						}
+					"text": "Здравствуйте! Я помогу вас с покупками.",
+					"tts":"Здр-авствуйте! Я помогу вас с пок-упками.",
         ],
         "end_session": false
       },
