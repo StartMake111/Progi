@@ -8,7 +8,7 @@
 using json = nlohmann::json;
 using namespace httplib;
 using namespace std;
-
+json cache;
 Client cli("http://api.openweathermap.org");
 Client timez("http://worldtimeapi.org");
 
@@ -41,6 +41,7 @@ json get_cache(){
   return cache;
 }
 bool cachejson(json ca){
+  cache = ca;
   ofstream cachename("cache.json");
   if (cachename.is_open()){
     cachename << ca;
