@@ -2,14 +2,17 @@
 #include <iostream>
 #include <random>
 using namespace std; 
-void print(vector<int> mass){
+template<class T>
+void print(vector<T> mass){
     for (int i = 0; i < mass.size(); i++)
     {
         cout << mass[i] << " ";
     }
     cout << "\n";    
 }
-bool is_sorted(vector<int> mass, bool des = true){
+ 
+template<class T>
+bool is_sorted(vector<T> mass, bool des = true){
     int size = mass.size();;
     if (des){
         for (int i = 0; i < size-1; i++)
@@ -24,7 +27,8 @@ bool is_sorted(vector<int> mass, bool des = true){
     }
     return true;
 }
-vector<int> Bozosort(vector<int> mass, bool des = true){
+template<class T>
+vector<int> Bozosort(vector<T> mass, bool des = true){
     int size = mass.size();
     vector<int> result = mass;
     while(is_sorted(result, des) == false){
@@ -36,17 +40,19 @@ vector<int> Bozosort(vector<int> mass, bool des = true){
     }
     return result;
 }
-vector<int> Bozosort(vector<vector<int>> mass, bool des = true){
-    vector<int> result;
-    for (vector<int> vec : mass){
+template<class T>
+vector<T> Bozosort(vector<vector<T>> mass, bool des = true){
+    vector<T> result;
+    for (vector<T> vec : mass){
         for(int elem : vec){
             result.push_back(elem);
         }
     }
     return Bozosort(result, des);
 }
-vector<int> Bozosort(int a1, int a2, int a3, bool des=true){
-    vector<int> result = {a1,a2,a3};
+template<class T>
+vector<T> Bozosort(T a1, T a2, T a3, bool des=true){
+    vector<T> result = {a1,a2,a3};
     return Bozosort(result, des);
 }
 int main(){
