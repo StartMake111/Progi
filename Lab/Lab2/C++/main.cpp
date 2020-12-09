@@ -1,4 +1,4 @@
-z#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <vector>
 #include <filesystem>
@@ -34,4 +34,3 @@ void gen_responceMute(const Request& req, Response& res){
       "version": "1.0"
     })";
 	res.set_content(str, "text/json; charset=UTF-8");
-}
