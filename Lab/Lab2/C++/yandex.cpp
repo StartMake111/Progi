@@ -5,10 +5,10 @@
 
 #include "Include/cpp-httplib/httplib.h"
 #include "Include/nlohman/json.hpp"
-
 using json = nlohmann::json;
 using namespace httplib;
 namespace fs = std::filesystem;
+json get_webhooks();
 
 enum voice_mode
 {
@@ -67,8 +67,7 @@ json help_state_buttons =
 	},
 };
 
-json get_config(); // webhooks.cpp
-
+json get_config();
 json gen_response(const std::string& text,
 	const std::string& tts,
 	const json& buttons,
@@ -354,7 +353,7 @@ void yandex_hook(const Request& req, Response& res)
 				{"cart", (*cur_session)["cart"]}
 			};
 
-			json config = get_config(); // webhooks.cpp
+			json config = get_webhooks(); 
 
 			for (std::string link : config["webhooks"])
 			{

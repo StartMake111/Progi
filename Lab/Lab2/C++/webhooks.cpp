@@ -8,7 +8,6 @@ using json = nlohmann::json;
 using namespace httplib;
 namespace fs = std::filesystem;
 json get_webhooks();
-void gen_responceMute(const Request& req, Response& res);
 void save_webhooks(json config);
 std::string gen_webhook_page();
 void webhooks_post(const Request& req, Response& res);

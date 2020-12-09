@@ -21,16 +21,16 @@ void replace_all(std::string& data,
 		pos = data.find(to_replace, pos + replace_with.size());
 	}
 }
-void gen_responceMute(const Request& req, Response& res){
-	std::cout << req.body.c_str();
-	std::string str= u8R"(
-		{
-			"response":{
-					"text": "Здравствуйте! Я помогу вас с покупками.",
-					"tts":"Здр-авствуйте! Я помогу вас с пок-упками.",
-        ],
-        "end_session": false
-      },
-      "version": "1.0"
-    })";
-	res.set_content(str, "text/json; charset=UTF-8");
+json get_webhooks();
+void save_webhooks(json config);
+std::string gen_webhook_page();
+void webhooks_get(const Request& req, Response& res);
+void webhooks_post(const Request& req, Response& res);
+void yandex_hook(const Request& req, Response& res);
+int main(){
+	Server svr;
+	svr.Get("/webhooks", webhooks_get);
+	svr.Post("/webhooks", webhooks_post);
+	svr.Post("/yandex_hook", yandex_hook);
+	svr.listen("localhost", 1234);
+}
