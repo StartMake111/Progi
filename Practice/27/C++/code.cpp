@@ -31,7 +31,7 @@ vector<int> Bozosort(vector<int> mass,int max, bool des = true){
     return result;
 }
 int main(){
-    int n,max,counter;
+    int n,max=0,counter;
     println("Enter the integer n that will be the len of vector");
     cin >> n;
     vector<int> vec;
