@@ -379,7 +379,7 @@ void yandex_hook(const Request& req, Response& res)
 					std::cout << link.substr(0, index).c_str() << std::endl;
 					std::cout << link.substr(index, link.size()).c_str() << std::endl;
 					Client cli(link.substr(0, index).c_str());
-					cli.Post(link.substr(index, -1).c_str(), output.dump(2), "text/json; charset=UTF-8");
+					cli.Post(link.substr(index, -1).c_str(), output.dump(2), "application/json; charset=UTF-8");
 				}
 			}
 

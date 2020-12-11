@@ -1,38 +1,48 @@
 import openpyxl
 import datetime
 import json
+import os.path
 from flask import Flask, request
 app = Flask(__name__)
-lastadd = 1
-x = '1235'
-columnN,columnID,columnTime,columnItem,columnPrice = 0,1,2,3,4
-book = openpyxl.Workbook()
-sheet = book.active
-sheet.cell(1,1).value = 'N'
-sheet.cell(1,2).value = 'User ID'
-sheet.cell(1,3).value = 'Datetime'
-sheet.cell(1,4).value = 'Item'
-sheet.cell(1,5).value = 'Price'
-book.save('data.xlsx')
-book.close
-nest = lastadd+1
-timereq = datetime.datetime.now().time()
+columnN,columnID,columnTime,columnItem,columnPrice = 1,2,3,4,5
+if not(os.path.exists('data.xlsx')):    
+    book = openpyxl.Workbook()
+    sheet = book.active
+    sheet.cell(1,1).value = 'N'
+    sheet.cell(1,2).value = 'User ID'
+    sheet.cell(1,3).value = 'Datetime'
+    sheet.cell(1,4).value = 'Item'
+    sheet.cell(1,5).value = 'Price'
+    sheet.cell(25,25).value = 1
+    sheet.cell(25,26).value = 1
+    book.save('data.xlsx')
+    book.close
 @app.route('/', methods = ['POST', 'GET'])
-def index(nest,lastadd,timereq):
+def index():
+    book = openpyxl.open('data.xlsx', read_only=True)
+    sheet = book.active
+    lastadd = sheet["Y25"].value
+    nest = sheet["Z25"].value
+    book.close
+    timereq = datetime.datetime.now().time()
     if request.method == 'POST':
         userid = request.json["user_id"]
         cart = request.json["cart"]
-        book = openpyxl.Workbook()
+        book = openpyxl.load_workbook('data.xlsx')
         sheet = book.active
-        sheet[nest][columnN].value = lastadd
-        sheet[nest][columnID].value = userid
-        sheet[nest][columnTime].value = timereq
+        lastadd+=1
+        sheet.cell(lastadd,columnN).value = nest
+        sheet.cell(lastadd,columnID).value = userid
+        sheet.cell(lastadd,columnTime).value = timereq
+        print(lastadd)
         for item in cart:
-            lastadd+=1
             itemname = item['item']
             itemprice = item['price']
-            sheet[lastadd][columnItem].value = itemname
-            sheet[lastadd][columnPrice].value = itemprice
+            sheet.cell(lastadd,columnItem).value = itemname
+            sheet.cell(lastadd,columnPrice).value = itemprice
+            lastadd+=1
+        sheet.cell(25,25).value = lastadd-1
+        sheet.cell(25,26).value = nest+1
         book.save('data.xlsx')
         book.close
         return 'POST'
