@@ -24,8 +24,8 @@ def index():
         global number, buffer
         for item in json_from_post['cart']:
             buy = [number, json_from_post['user_id'], time, item['item'], item['price']]
-        number += 1  
-        buffer.append(buy)
+            number += 1  
+            buffer.append(buy)
         if len(buffer)>1000:
             writeexel()
         return 'OK'
