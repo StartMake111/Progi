@@ -106,19 +106,19 @@
 
 Ссылка на файл excel:
 
-![data.xlsx](Python/data.xlsx)
+[data.xlsx](Python/data.xlsx)
 
 Ссылка на исходный код на C++:
 
-![main](C++/main.cpp)
+[main](C++/main.cpp)
 
-![webhooks](C++/webhooks.cpp)
+[webhooks](C++/webhooks.cpp)
 
-![Alica](C++/yandex.cpp)
+[Alica](C++/yandex.cpp)
 
 Ссылка на исходный код на Python:
 
-![code.py](Python/code.py)
+[code.py](Python/code.py)
 
 ## Вывод
 
