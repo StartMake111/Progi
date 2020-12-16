@@ -108,11 +108,13 @@
 
 Ссылка на файл excel:
 
-
+![data.xlsx](Python/data.xlsx)
 
 Ссылка на исходный код на C++:
 
+![webhooks](C++/webhooks.cpp)
 
+![Alica](C++/yandex.cpp)
 
 Ссылка на исходный код на Python:
 
