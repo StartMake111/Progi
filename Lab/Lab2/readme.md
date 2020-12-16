@@ -110,6 +110,8 @@
 
 Ссылка на исходный код на C++:
 
+![main](C++/main.cpp)
+
 ![webhooks](C++/webhooks.cpp)
 
 ![Alica](C++/yandex.cpp)
