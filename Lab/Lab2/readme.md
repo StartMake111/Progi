@@ -116,7 +116,7 @@
 
 Ссылка на исходный код на Python:
 
-![script.py](Python/code.py)
+![code.py](Python/code.py)
 
 ## Вывод
 
