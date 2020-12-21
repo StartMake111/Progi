@@ -59,17 +59,18 @@ std::ostream& operator << (std::ostream& print, const std::vector<Student>& loxi
         return print;
 }
 int main (){
+    std::srand(std::time(0));
     std::vector<Student> students = {
                                     Student("WhosJoe",      1, 5, 4, 4, 3),
-                                    Student("Mathue",       2, 4, 4, 2, 4),
+                                    Student("Mathue",       2, 4, 4, 3, 4),
                                     Student("JoJo",         3, 5, 5, 5, 5),
-                                    Student("Putin",        9, 1, 2, 1, 1),
+                                    Student("Damedane",     9, 1, 3, 1, 1),
                                     Student("Oama",         3, 3, 3, 3, 3),
-                                    Student("Bdne",         0, 4, 5, 4, 3),
+                                    Student("Dameyo",       0, 4, 5, 4, 3),
                                     Student("BTSgay",       6, 3, 4, 3, 5),
-                                    Student("BLMno",        0, 2, 2, 2, 2),
+                                    Student("Dame",         0, 3, 3, 3, 3),
                                     Student("UWUUWU",       5, 4, 3, 3, 1),
-                                    Student("PipiPUPUU",    4, 5, 3, 2, 3)};
+                                    Student("Dameyu",       4, 5, 2, 3, 3)};
     std::vector<Student> dvoeshniki;
     int kolvo = 0;
     for (auto lox : students){
@@ -81,8 +82,13 @@ int main (){
             }
         }
     }
-    int ktoto = std::srand(std::time(0))->int % kolvo;
+    if (kolvo){
+    int ktoto = std::rand() %kolvo;
     std::cout << Bozosort(dvoeshniki);
-    cout << dvoeshniki[ktoto];  
-    std::cout << ktoto;
+    std::cout << "Explusion\n";
+    std::cout << dvoeshniki[ktoto];
+    }
+    else{
+        cout << "Not found\n";
+    }
 }
