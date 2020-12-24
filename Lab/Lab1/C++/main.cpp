@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Include/cpp-httplib/httplib.h"
 #include "Include/nlohman/json.hpp"
+#include "Include/cpp-httplib/httplib.h"
 #include <iomanip>
 #include <string>
 #include <ctime>
@@ -44,7 +44,7 @@ bool cachejson(json ca){
   cache = ca;
   ofstream cachename("cache.json");
   if (cachename.is_open()){
-    cachename << ca;
+    cachename << ca.dump(4);
     cachename.close();
   }
   else return false;
@@ -61,20 +61,19 @@ json get_time(){
     return ("Err");
   }
   return json::parse(time->body);
-}
+} 
 json get_hourly_request(json &hourly){
   json hourly_request;
   int last = hourly.size()-1;
   json timenow = get_time();
   int currtime = timenow["unixtime"];
-  if (hourly[last]["dt"] < currtime){
+  if (hourly[last]["dt"] <= currtime){
     return json::object();
   }
-  for (int i; i<= last; ++i){
-    if (hourly[i]["dt"] >= timenow){
-      hourly_request = hourly[i];
-      break;
-    }
+  for (int i = 0; i <= last; ++i) {
+      if (hourly[i]["dt"] > currtime) {
+          hourly_request = hourly[i];
+          return hourly_request;
+      }
   }
-  return hourly_request;
 }

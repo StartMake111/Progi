@@ -4,7 +4,7 @@ import requests
 
 def reload_data(event=None):
 	try:
-		response = requests.get('http://localhost:1074/raw').content.decode("utf8")
+		response = requests.get('http://localhost:1234/raw').content.decode("utf8")
 		forecast_j = json.loads(response)
 
 		desc.config(text=str(forecast_j["description"]))
