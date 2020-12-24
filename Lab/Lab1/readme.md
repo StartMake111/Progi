@@ -1,14 +1,9 @@
 
 <p align="center">МИНИСТЕРСТВО НАУКИ  И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ<br>
-
 Федеральное государственное автономное образовательное учреждение высшего образования<br>
-
 "КРЫМСКИЙ ФЕДЕРАЛЬНЫЙ УНИВЕРСИТЕТ им. В. И. ВЕРНАДСКОГО"<br>
-
 ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ<br>
-
 Кафедра компьютерной инженерии и моделирования</p>
-
 <br>
 
 <h3 align="center">Отчёт по лабораторной работе № 1<br> по дисциплине "Программирование"</h3>
@@ -78,12 +73,93 @@ http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=[{API key}](http
 
 ```c++
 #include <iostream>
+#include "Include/nlohman/json.hpp"
+#include "Include/cpp-httplib/httplib.h"
+#include <iomanip>
+#include <string>
+#include <ctime>
+#include <fstream>
+using json = nlohmann::json;
+using namespace httplib;
+using namespace std;
+json cache;
+Client cli("http://api.openweathermap.org");
+Client timez("http://worldtimeapi.org");
+
+json get_json(){
+  auto res = cli.Get("/data/2.5/onecall?lat=44.9698623&lon=34.1329217&exclude=current,minutely,daily,alerts&units=metric&lang=ru&appid=e1f4f9f81642622cc21d70a6baf981e5");
+  if (!res){
+    return ("Err");
+  }
+  int status = res->status;
+  if (status <200 or status >=300){
+    return ("Err");
+  }
+  return json::parse(res->body);
+}
+json get_cache(){
+  json cache;
+  std::ifstream cachename("cache.json");
+  if (cachename.is_open()){
+    string inform;
+    getline(cachename, inform, '\0');
+
+    if (!inform.empty()){
+      cache = json::parse(inform);
+    }
+    cachename.close();
+  }
+  else{
+    return ("Err");
+  }
+  return cache;
+}
+bool cachejson(json ca){
+  cache = ca;
+  ofstream cachename("cache.json");
+  if (cachename.is_open()){
+    cachename << ca.dump(4);
+    cachename.close();
+  }
+  else return false;
+  return true;
+}
+json get_time(){
+  auto time = timez.Get("/api/timezone/Europe/Simferopol");
+  if (!time){
+    return("Err");
+    return json::object();
+  }
+  int status = time->status;
+  if (status < 200 or status >= 300){
+    return ("Err");
+  }
+  return json::parse(time->body);
+} 
+json get_hourly_request(json &hourly){
+  json hourly_request;
+  int last = hourly.size()-1;
+  json timenow = get_time();
+  int currtime = timenow["unixtime"];
+  if (hourly[last]["dt"] <= currtime){
+    return json::object();
+  }
+  for (int i = 0; i <= last; ++i) {
+      if (hourly[i]["dt"] > currtime) {
+          hourly_request = hourly[i];
+          return hourly_request;
+      }
+  }
+}
+```
+```c++
+#include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <string>
 #include <ctime>
-#include "Include/cpp-httplib/httplib.h"
 #include "Include/nlohman/json.hpp"
+#include "Include/cpp-httplib/httplib.h"
 using json = nlohmann::json;
 using namespace httplib;
 json get_json();
@@ -91,7 +167,7 @@ json get_cache();
 json get_hourly_request(json &hourly);
 bool cachejson(json ca);
 json get_time();
-void findandreplace(std::string & data, std::string toSearch, std::string replaceStr){
+void findandreplace(std::string &data, std::string toSearch, std::string replaceStr){
     size_t pos = data.find(toSearch);
     while(pos != std::string::npos){
         data.replace(pos, toSearch.size(), replaceStr);
@@ -102,21 +178,21 @@ void responce(const Request &req, Response &res){
     json body1;
     json prognoz1;
     body1 = get_cache();
-    if (body1.empty()){
+    if (body1.empty()) {
         body1 = get_json();
-        if (!body1["err"].is_null()){
+        if (body1.contains("err")) {
             res.set_content(body1["err"], "text/plain");
-            return;
-        }else if (!body1["err"].is_null()) {
+        }
+        else if (body1.contains("err")) {
             res.set_content(body1, "text/json");
         }
         cachejson(body1);
+    }
         prognoz1 = get_hourly_request(body1["hourly"]);
-        if (!prognoz1["err"].is_null()){
+        if (prognoz1.contains("err")) {
             res.set_content(prognoz1["err"], "text/plain");
             return;
         }
-    }
     std::string tamplname = "templ.html";
     std::ifstream tamplate(tamplname);
     std::string str;
@@ -131,7 +207,7 @@ void responce(const Request &req, Response &res){
     findandreplace(str, "{hourly[i].weather[0].description}", prognoz1["weather"][0]["description"]);
     findandreplace(str, "{hourly[i].weather[0].icon}", prognoz1["weather"][0]["icon"]);
     findandreplace(str, "{hourly[i].temp}", std::to_string(int(round(prognoz1["temp"].get<double>()))));
-    res.set_content(str, "text,html");
+    res.set_content(str, "text/html");
 }
 void responceraw(const Request &req, Response &res){
     json body2;
@@ -139,31 +215,18 @@ void responceraw(const Request &req, Response &res){
     body2 = get_cache();
     if (body2.empty()){
         body2 = get_json();
-        if (!body2["err"].is_null()) {
+        if (body2 == "err") {
             res.set_content(body2, "text/json");
-            return;
         }
-    } else if (!body2["err"].is_null()) {
+    } else if (body2.contains("err")) {
         res.set_content(body2, "text/json");
     }
-    
     prognoz2 = get_hourly_request(body2["hourly"]);
-    if (!prognoz2["err"].is_null()) {
+    if (prognoz2.contains("err")) {
             res.set_content(prognoz2["err"], "text/plain");
             return;
         }
     cachejson(body2);
-    std::string tamplname = "templ.html";
-    std::ifstream tamplate(tamplname);
-    std::string str;
-    if (tamplate.is_open()){
-        getline(tamplate,str, '\0');
-        tamplate.close();
-    }
-    else {
-        res.set_content("Error", "text/plain");
-        return;
-    }
     json out;
     out["temp"] = prognoz2["temp"];
     out["description"] = prognoz2["weather"][0]["description"];
@@ -173,7 +236,7 @@ int main(){
     Server bers;
     bers.Get("/", responce);
     bers.Get("/raw", responceraw);
-    bers.listen("localhost", 1074);
+    bers.listen("localhost", 1234);
 }
 ```
 
@@ -186,7 +249,7 @@ import requests
 
 def reload_data(event=None):
 	try:
-		response = requests.get('http://localhost:1074/raw').content.decode("utf8")
+		response = requests.get('http://localhost:1234/raw').content.decode("utf8")
 		forecast_j = json.loads(response)
 
 		desc.config(text=str(forecast_j["description"]))
