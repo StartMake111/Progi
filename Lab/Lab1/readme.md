@@ -62,7 +62,7 @@ http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=[{API key}](http
 
 ![Рис. 1.1](./Pic/Pic1.jpg)
 
-<center> <i> Рисунок 1.1. Полученный запрос с сайта. </center>
+<center> Рисунок 1.1. Полученный запрос с сайта. </center>
 
 ### Задание 2
 
