@@ -8,7 +8,7 @@ def reload_data(event=None):
 		forecast_j = json.loads(response)
 
 		desc.config(text=str(forecast_j["description"]))
-		temp.config(text=str(forecast_j["temp"]) + "°C")
+		temp.config(text=str(int(forecast_j["temp"])) + "°C")
 	except requests.exceptions.ConnectionError:
 		pass
 
