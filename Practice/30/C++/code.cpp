@@ -1,37 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <map>
-
-struct Item;
-
-int main(){
-    std::vector<Item> LootBox;
-    std::map <void, double> chance {
-        {GetCoin(1000), 50},
-        {GetRunefire(1), 5},
-        {GetRunewater(1), 13},
-        {GetRuneearth(1), 7},
-        {GetRuneair(1), 14},
-        {GetRunefire(5), 0.6},
-        {GetRunewater(5), 1.3},
-        {GetRuneearth(5), 0.7},
-        {GetRuneair(5), 1.4},
-        {GetRunefire(5), 0.06},
-        {GetRunewater(5), 0.13},
-        {GetRuneearth(5), 0.07},
-        {GetRuneair(5), 0.14},
-    };
-}
-
-
-
-
-
+#include <ctime>
 
 struct Weapon
 {
     uint damage;
-    uint ctitical;
+    uint critical;
     uint durability;
 };
 struct Armor
@@ -45,7 +20,7 @@ struct Coin
 };
 struct Rune
 {
-    int level;
+    uint level;
     enum class Element{
         FIRE,
         WATER,
@@ -53,6 +28,8 @@ struct Rune
         AIR,
     } element;
 };
+struct Item;
+Item generate();
 struct Item
 {
     enum class ItemType{
@@ -68,6 +45,157 @@ struct Item
         Weapon weapon;
         Armor armor;
     } value;
-    Item& operator++ (){;
+    Item& operator++ (){
+        *this = generate();
+        return *this;
     }  
 };
+Item GetCoin(uint count) {
+    return {Item{Item::ItemType::COIN,Item::Value{.coin = Coin{count}}}};
+}
+Item GetRune(Rune::Element element, uint level){
+    return {Item{Item::ItemType::RUNE,Item::Value{.rune = Rune{level, element}}}};
+}
+Item GetRunefire(uint level){
+    return GetRune(Rune::Element::FIRE,  level);
+}
+Item GetRunewater(uint level){
+    return GetRune(Rune::Element::WATER, level);
+}
+Item GetRuneearth(uint level){
+    return GetRune(Rune::Element::EARTH, level);
+}
+Item GetRuneair(uint level){
+    return GetRune(Rune::Element::AIR,   level);
+}
+Item GetWeapon(uint damage, uint critical, uint durability){
+    return {Item{Item::ItemType::WEAPON, Item::Value{.weapon = Weapon{damage, critical, durability}}}};
+}
+Item GetArmor(uint guard, uint durability){
+    return {Item{Item::ItemType::ARMOR, Item::Value{.armor = Armor{guard,durability}}}};
+}
+
+template<class T, class S>
+struct Pair
+{
+    T first;
+    S second;
+};
+std::vector<Pair<Item, double>> chance = {
+    {GetCoin(1000), 50},
+    {GetRunefire(1), 6}, //56
+    {GetRunewater(1), 13}, //69
+    {GetRuneearth(1), 7}, // 76
+    {GetRuneair(1), 14},// 90
+    {GetRunefire(5), 0.6}, // 90.6
+    {GetRunewater(5), 1.3}, // 91.9
+    {GetRuneearth(5), 0.7}, // 92.6
+    {GetRuneair(5), 1.4}, // 94
+    {GetRunefire(10), 0.06}, //94.06
+    {GetRunewater(10), 0.13}, //94.19
+    {GetRuneearth(10), 0.07},//94.26
+    {GetRuneair(10), 0.14},//94.4
+    {GetWeapon(100,0,100),1.4}, // 95.8
+    {GetWeapon(75,50,100),1.4}, //97.2
+    {GetArmor(50,100), 2.8}, //100
+};
+double counter(){
+    double sum = 0;
+    for (auto& i : chance)
+        {
+            sum+=i.second;
+        }
+    return sum;
+}
+std::ostream& operator<<(std::ostream& out, Pair<Item, double>& chances){
+    out << chances.second << std::endl;
+    return out;
+}
+Item generate(){
+    double random = double(rand()% int(counter()));
+    double cursum = 0;
+    for(auto& elem : chance){
+        if (cursum > random or random < cursum + elem.second){
+            return elem.first;
+        }
+        cursum += elem.second;
+    }
+    return chance[0].first;
+};
+std::string s_ting (Rune::Element& element){
+    switch (element)
+    {
+    case Rune::Element::FIRE:
+    return "fire";
+    case Rune::Element::EARTH:
+    return "earth";
+    case Rune::Element::WATER:
+    return "water";
+    case Rune::Element::AIR:
+    return "air";
+    }
+    return "rune";
+}
+
+std::ostream& operator<< (std::ostream& out, Item& item){
+    Item::ItemType& type = item.type;
+    switch (type)
+    {
+    case Item::ItemType::COIN:
+        out << item.value.coin.count << "Gold";
+        break;
+
+    case Item::ItemType::RUNE:
+        out << "Rune of ";
+        out << s_ting(item.value.rune.element) << " ";
+        out << item.value.rune.level;
+        out << " lvl";
+        break;
+
+    case Item::ItemType::WEAPON:
+        if (item.value.weapon.damage == 100) out << "God killer. ";
+        if (item.value.weapon.damage == 75) out << "Demon Slayer. ";
+        out<< "Damage: ";
+        out << item.value.weapon.damage;    out << ", crit: " ;
+        out << item.value.weapon.critical;  out << ", durability: " ;
+        out << item.value.weapon.durability;
+        break;
+
+    case Item::ItemType::ARMOR:
+        out << "Bronezhiletka. Guard: "; out << item.value.armor.guard; out << ", durability: "; out<< item.value.armor.durability ;
+        break;
+    }
+    out << std::endl;
+    return out;
+}
+using LootBox = std::vector<Item>;
+LootBox generate_lootbox();
+LootBox& operator<<(LootBox& box, Item item){
+    box.push_back(item);
+    return box;
+}
+LootBox generate_lootbox(){
+    LootBox box;
+    srand(time(0));
+    for (int i; i < 3; i++) box << generate();
+    return box;
+}
+std::ostream& operator<<(std::ostream& out, LootBox& lootbox){
+    for (auto& elem : lootbox){
+        out << elem << "\n";
+    }
+    return out;
+}
+int main(){
+    while (true){
+        std::cout << "Open LootBox? Yes/No" << std::endl;
+        std::string line;
+        std::cin >> line;
+        if (line == "y" or line == "Y" or line == "Ye" or line == "ye" or line == "yE" or line == "Yes" or line == "yes" or line == "yep" or line == "Yep"){
+            std::cout<<"\n";
+            auto box = generate_lootbox();
+            std::cout << box;
+        }
+        else break;
+    }
+}
