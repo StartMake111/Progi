@@ -2,7 +2,6 @@
 #include <vector>
 #include <map>
 #include <ctime>
-
 struct Weapon
 {
     uint damage;
