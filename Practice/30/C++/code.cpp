@@ -20,63 +20,38 @@ struct Coin
 struct Rune
 {
     uint level;
-    enum class Element{
-        FIRE,
-        WATER,
-        EARTH,
-        AIR,
-    } element;
+    enum class Element{FIRE,WATER,EARTH, AIR} element;
 };
 struct Item;
 Item generate();
 struct Item
 {
-    enum class ItemType{
-        COIN,
-        RUNE,
-        WEAPON,
-        ARMOR,
-    } type;
-    union Value
-    {
-        Coin coin;
-        Rune rune;
-        Weapon weapon;
-        Armor armor;
-    } value;
+    enum class ItemType{COIN,RUNE,WEAPON,ARMOR} type;
+    union Value {Coin coin;Rune rune;Weapon weapon;Armor armor;} value;
     Item& operator++ (){
         *this = generate();
         return *this;
     }  
 };
 Item GetCoin(uint count) {
-    return {Item{Item::ItemType::COIN,Item::Value{.coin = Coin{count}}}};
-}
+    return {Item{Item::ItemType::COIN,Item::Value{.coin = Coin{count}}}};}
 Item GetRune(Rune::Element element, uint level){
-    return {Item{Item::ItemType::RUNE,Item::Value{.rune = Rune{level, element}}}};
-}
+    return {Item{Item::ItemType::RUNE,Item::Value{.rune = Rune{level, element}}}};}
 Item GetRunefire(uint level){
-    return GetRune(Rune::Element::FIRE,  level);
-}
+    return GetRune(Rune::Element::FIRE,  level);}
 Item GetRunewater(uint level){
-    return GetRune(Rune::Element::WATER, level);
-}
+    return GetRune(Rune::Element::WATER, level);}
 Item GetRuneearth(uint level){
-    return GetRune(Rune::Element::EARTH, level);
-}
+    return GetRune(Rune::Element::EARTH, level);}
 Item GetRuneair(uint level){
-    return GetRune(Rune::Element::AIR,   level);
-}
+    return GetRune(Rune::Element::AIR,   level);}
 Item GetWeapon(uint damage, uint critical, uint durability){
-    return {Item{Item::ItemType::WEAPON, Item::Value{.weapon = Weapon{damage, critical, durability}}}};
-}
+    return {Item{Item::ItemType::WEAPON, Item::Value{.weapon = Weapon{damage, critical, durability}}}};}
 Item GetArmor(uint guard, uint durability){
-    return {Item{Item::ItemType::ARMOR, Item::Value{.armor = Armor{guard,durability}}}};
-}
+    return {Item{Item::ItemType::ARMOR, Item::Value{.armor = Armor{guard,durability}}}};}
 
 template<class T, class S>
-struct Pair
-{
+struct Pair{
     T first;
     S second;
 };
@@ -101,9 +76,7 @@ std::vector<Pair<Item, double>> chance = {
 double counter(){
     double sum = 0;
     for (auto& i : chance)
-        {
             sum+=i.second;
-        }
     return sum;
 }
 std::ostream& operator<<(std::ostream& out, Pair<Item, double>& chances){
@@ -122,46 +95,37 @@ Item generate(){
     return chance[0].first;
 };
 std::string s_ting (Rune::Element& element){
-    switch (element)
-    {
-    case Rune::Element::FIRE:
-    return "fire";
-    case Rune::Element::EARTH:
-    return "earth";
-    case Rune::Element::WATER:
-    return "water";
-    case Rune::Element::AIR:
-    return "air";
+    switch (element){
+        case Rune::Element::FIRE:
+            return "fire";
+        case Rune::Element::EARTH:
+            return "earth";
+        case Rune::Element::WATER:
+            return "water";
+        case Rune::Element::AIR:
+            return "air";
     }
     return "rune";
 }
 
 std::ostream& operator<< (std::ostream& out, Item& item){
     Item::ItemType& type = item.type;
-    switch (type)
-    {
+    switch (type){
     case Item::ItemType::COIN:
         out << item.value.coin.count << "Gold";
         break;
-
     case Item::ItemType::RUNE:
-        out << "Rune of ";
-        out << s_ting(item.value.rune.element) << " ";
-        out << item.value.rune.level;
-        out << " lvl";
+        out << "Rune of " << s_ting(item.value.rune.element) << " " << item.value.rune.level  << " lvl";
         break;
 
     case Item::ItemType::WEAPON:
         if (item.value.weapon.damage == 100) out << "God killer. ";
         if (item.value.weapon.damage == 75) out << "Demon Slayer. ";
-        out<< "Damage: ";
-        out << item.value.weapon.damage;    out << ", crit: " ;
-        out << item.value.weapon.critical;  out << ", durability: " ;
-        out << item.value.weapon.durability;
+        out<< "Damage: " << item.value.weapon.damage << ", crit: " << item.value.weapon.critical;  out << ", durability: " << item.value.weapon.durability;
         break;
 
     case Item::ItemType::ARMOR:
-        out << "Bronezhiletka. Guard: "; out << item.value.armor.guard; out << ", durability: "; out<< item.value.armor.durability ;
+        out << "Bronezhiletka. Guard: " << item.value.armor.guard  << ", durability: " << item.value.armor.durability;
         break;
     }
     out << std::endl;
@@ -190,11 +154,11 @@ int main(){
         std::cout << "Open LootBox? Yes/No" << std::endl;
         std::string line;
         std::cin >> line;
-        if (line == "y" or line == "Y" or line == "Ye" or line == "ye" or line == "yE" or line == "Yes" or line == "yes" or line == "yep" or line == "Yep"){
+        if (line == "y" or line == "Y" or line == "Ye" or line == "ye" or line == "yE" or line == "Yes" or line == "yes"){
             std::cout<<"\n";
             auto box = generate_lootbox();
             std::cout << box;
         }
-        else break;
+        else if (line == "n" or line == "N" or line == "No" or line == "no" or line == "nO" or line == "NO" or line == "on") break;
     }
 }
