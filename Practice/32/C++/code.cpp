@@ -47,7 +47,7 @@ std::istream& operator>> (std::istream& in, std::vector<Passenger>& passengers){
     }
     return in;
 }
-std::ofstream& operator<< (std::ofstream& out, std::vector<Passenger>& passengers){
+std::ostream& operator<< (std::ostream& out, std::vector<Passenger>& passengers){
     ifstream file;
     auto lenname = 0;
     auto lenticket = 0;
@@ -76,8 +76,12 @@ std::ofstream& operator<< (std::ofstream& out, std::vector<Passenger>& passenger
 int main(){
         std::vector<Passenger> passengers;
         std::ifstream data;
-        data.open("/train.csv");
+        data.open("train.csv");
         if (data.is_open()) data >> passengers;
-
+        data.close();
+        ofstream data1;
+        data1.open("output.txt");
+        if (data.is_open()) data1 << passengers;
+        data1.close();
 
     }
