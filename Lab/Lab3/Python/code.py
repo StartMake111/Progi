@@ -20,17 +20,14 @@ class Game:
         self.root.configure(background="#414141")
         self.col = 0
         self.localgem = []
-        self.tileset = Image.open("Lab/Lab3/Python/Assets/cell-bgr.png").convert("RGBA")
+        self.end = Label()
+        self.tileset = Image.open("Assets/cell-bgr.png").convert("RGBA")
         self.img_tile = ImageTk.PhotoImage(self.tileset.crop((0, 1, 67, 66)))
         self.tile_selected = (
-            Image.open("Lab/Lab3/Python/Assets/cell-bgr.png")
-            .convert("RGBA")
-            .crop((1, 69, 67, 135))
+            Image.open("Assets/cell-bgr.png").convert("RGBA").crop((1, 69, 67, 135))
         )
         self.img_tile_selected = ImageTk.PhotoImage(self.tileset.crop((1, 69, 67, 135)))
-        self.page_bgr = Image.open("Lab/Lab3/Python/Assets/page-bgr.png").convert(
-            "RGBA"
-        )
+        self.page_bgr = Image.open("Assets/page-bgr.png").convert("RGBA")
         self.img_page_bgr = ImageTk.PhotoImage(self.page_bgr)
         self.colorpic = []
         self.clic = False
@@ -52,35 +49,35 @@ class Game:
             random.randint(0, 6),
         )
         self.balraw = {
-            "pink": Image.open("Lab/Lab3/Python/Assets/ball-pink.png")
+            "pink": Image.open("Assets/ball-pink.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "red": Image.open("Lab/Lab3/Python/Assets/ball-red.png")
+            "red": Image.open("Assets/ball-red.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "yellow": Image.open("Lab/Lab3/Python/Assets/ball-yellow.png")
+            "yellow": Image.open("Assets/ball-yellow.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "green": Image.open("Lab/Lab3/Python/Assets/ball-green.png")
+            "green": Image.open("Assets/ball-green.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "aqua": Image.open("Lab/Lab3/Python/Assets/ball-aqua.png")
+            "aqua": Image.open("Assets/ball-aqua.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "blue": Image.open("Lab/Lab3/Python/Assets/ball-blue.png")
+            "blue": Image.open("Assets/ball-blue.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "violet": Image.open("Lab/Lab3/Python/Assets/ball-violet.png")
+            "violet": Image.open("Assets/ball-violet.png")
             .convert("RGBA")
             .crop(b)
             .resize(zoom),
-            "bg": Image.open("Lab/Lab3/Python/Assets/cell-bgr.png").convert("RGBA"),
+            "bg": Image.open("Assets/cell-bgr.png").convert("RGBA"),
         }
         pic_size_same_as_bgr = Image.new("RGBA", self.tileset.size)
         pic_size_same_as_bgr.paste(self.balraw["pink"], (70, 0))
@@ -147,9 +144,7 @@ class Game:
 
         ppchek[6].paste(self.balraw["violet"], (0, 0), self.balraw["violet"])
         violet1 = ImageTk.PhotoImage(ppchek[6].crop((1, 0, 66, 66)))
-        self.page_bgr = Image.open("Lab/Lab3/Python/Assets/page-bgr.png").convert(
-            "RGBA"
-        )
+        self.page_bgr = Image.open("Assets/page-bgr.png").convert("RGBA")
         self.img_page_bgr = ImageTk.PhotoImage(self.page_bgr)
         self._balls = {
             "pink": pink,
@@ -169,15 +164,6 @@ class Game:
             "blue": blue1,
             "violet": violet1,
         }
-        # self.smallballs = {
-        #    "pink": pink2,
-        #    "red": red2,
-        #    "yellow": yellow2,
-        #    "green": green2,
-        #    "aqua": aqua2,
-        #    "blue": blue2,
-        #    "violet": violet2
-        # }
         self.colors = {
             0: "pink",
             1: "red",
@@ -242,8 +228,6 @@ class Game:
                     if len(self.Hasrowcolleced) >= 5:
                         self.foundrow = True
                         self.col += len(self.Hasrowcolleced) * 2
-                        # self.Hasrowcolleced.clear()
-                        # self.Hasrowcolleced.append(['', 0])
                         return
                     self.Hasrowcolleced.clear()
                     self.Hasrowcolleced.append([i[0], i[1]])
@@ -419,6 +403,7 @@ class Game:
         self.RandomPlaceColor()
         self.col = 0
         self.AddScore()
+        self.end.destroy()
 
     def set_color(self, event):
         for i in self.localgem:
@@ -494,15 +479,14 @@ class Game:
             random.randint(0, 80),
         )
         if len(self.use) > 78:
-            lbl = Label(
+            self.end = Label(
                 self.root,
                 text="Игра окончена",
                 font=("Arial", 16),
                 bg="#414141",
                 fg="white",
             )
-            lbl.place(x=660, y=530)
-            self.placed = True
+            self.end.place(x=660, y=530)
             return 0
 
         while True:
