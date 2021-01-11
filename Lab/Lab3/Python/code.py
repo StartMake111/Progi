@@ -20,7 +20,6 @@ class Game:
         self.root.configure(background="#414141")
         self.col = 0
         self.localgem = []
-        self.end = Label()
         self.tileset = Image.open("Assets/cell-bgr.png").convert("RGBA")
         self.img_tile = ImageTk.PhotoImage(self.tileset.crop((0, 1, 67, 66)))
         self.tile_selected = (
@@ -164,6 +163,15 @@ class Game:
             "blue": blue1,
             "violet": violet1,
         }
+        # self.smallballs = {
+        #    "pink": pink2,
+        #    "red": red2,
+        #    "yellow": yellow2,
+        #    "green": green2,
+        #    "aqua": aqua2,
+        #    "blue": blue2,
+        #    "violet": violet2
+        # }
         self.colors = {
             0: "pink",
             1: "red",
@@ -228,6 +236,8 @@ class Game:
                     if len(self.Hasrowcolleced) >= 5:
                         self.foundrow = True
                         self.col += len(self.Hasrowcolleced) * 2
+                        # self.Hasrowcolleced.clear()
+                        # self.Hasrowcolleced.append(['', 0])
                         return
                     self.Hasrowcolleced.clear()
                     self.Hasrowcolleced.append([i[0], i[1]])
@@ -403,7 +413,6 @@ class Game:
         self.RandomPlaceColor()
         self.col = 0
         self.AddScore()
-        self.end.destroy()
 
     def set_color(self, event):
         for i in self.localgem:
@@ -479,14 +488,15 @@ class Game:
             random.randint(0, 80),
         )
         if len(self.use) > 78:
-            self.end = Label(
+            lbl = Label(
                 self.root,
                 text="Игра окончена",
                 font=("Arial", 16),
                 bg="#414141",
                 fg="white",
             )
-            self.end.place(x=660, y=530)
+            lbl.place(x=660, y=530)
+            self.placed = True
             return 0
 
         while True:
