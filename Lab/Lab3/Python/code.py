@@ -349,9 +349,21 @@ class Game:
             self.selected_circle = self.used[event.widget][1]
             self.clic = True
         elif self.clic == True and event.widget != self.clcked:
+            global lbl
             self.clic = not self.clic
             self.clicto = event.widget
             self.creattabel()
+            if len(self.use) > 78:
+                lbl = Label(
+                    self.root,
+                    text="Игра окончена",
+                    font=("Arial", 16),
+                    bg="#414141",
+                    fg="white",
+                )
+                lbl.place(x=660, y=530)
+                self.placed = True
+                return 0
             if self.HasAccess():
                 self.loool = True
                 self.canbevisited.clear()
