@@ -232,13 +232,13 @@ class Game:
             for i in j:
                 if i[1] == self.Hasrowcolleced[0][1] and i[1] != 0:
                     self.Hasrowcolleced.append([i[0], i[1]])
-                else:
                     if len(self.Hasrowcolleced) >= 5:
                         self.foundrow = True
                         self.col += len(self.Hasrowcolleced) * 2
                         # self.Hasrowcolleced.clear()
                         # self.Hasrowcolleced.append(['', 0])
                         return
+                else:
                     self.Hasrowcolleced.clear()
                     self.Hasrowcolleced.append([i[0], i[1]])
 
@@ -254,11 +254,11 @@ class Game:
                     num += 1
                     if j == self.Hasrowcolleced[0][1] and j != 0:
                         self.Hasrowcolleced.append([i[0][num - 1], j])
-                    else:
                         if len(self.Hasrowcolleced) >= 5:
                             self.foundrow = True
                             self.col += len(self.Hasrowcolleced) * 2
                             return 0
+                    else:
                         self.Hasrowcolleced.clear()
                         self.Hasrowcolleced.append([i[0][num - 1], j])
 
@@ -269,11 +269,11 @@ class Game:
             for i in j:
                 if i[1] == self.Hasrowcolleced[0][1] and i[1] != 0:
                     self.Hasrowcolleced.append([i[0], i[1]])
-                else:
                     if len(self.Hasrowcolleced) >= 5:
                         self.foundrow = True
                         self.col += len(self.Hasrowcolleced) * 2
                         return
+                else:
                     self.Hasrowcolleced.clear()
                     self.Hasrowcolleced.append([i[0], i[1]])
 
