@@ -510,7 +510,9 @@ class Game:
             lbl.place(x=660, y=530)
             self.placed = True
             return 0
-
+        if self.placed:
+            lbl.destroy()
+            self.placed = False
         while True:
             found = 1
             rand11, rand22, rand33 = (
