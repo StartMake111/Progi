@@ -9,6 +9,13 @@ int *create(int len, int first = 0, int toplus = 0)
     }
     return arr;
 }
+void shift(int *arr, int i){
+    int gara;
+	for(gara = *i; i > arr && *(i-1) > gara; i--) {
+		*i = *(i-1);
+	}
+	*i = gara;
+}
 int *sort(int *arr, int len)
 {
     int *i, *last = arr + len;
@@ -17,11 +24,7 @@ int *sort(int *arr, int len)
     {
         if (*i < *(i - 1))
         {
-            for (ival = *i; i > arr && *(i - 1) > ival; i--)
-            {
-                *i = *(i - 1);
-            }
-            *i = ival;
+            shift(arr,i);
         }
     }
 
