@@ -7,6 +7,8 @@ class Rational:
         self.num = abs(numerator)
         self.denum = abs(denuminator)
         self.sign = -1 if numerator < 0 or denuminator < 0 else 1
+        if numerator < 0 and denuminator < 0:
+            self.sign = 1
 
     def isNaN(self):
         return self.num == self.denum == 0
@@ -29,14 +31,14 @@ class Rational:
         if self.isNaN() or other.isNaN():
             return False
         if self.denum == other.denum == 0:
-            return self.sign == self.sign
+            return self.sign == other.sign
         return self.sign * self.num * other.denum == other.sign * other.num * self.denum
 
     def __add__(self, other):
-        if self.isNaN() or other.isNaN() or self.denum == other.denum == 0:
+        if self.isNaN() or other.isNaN():
             return Rational(0, 0)
-        if self.denum == other.denum == 0 and self.sign == other.sign:
-            return self
+        if self.denum == other.denum == 0:
+            return self if self.sign == other.sign else Rational(0, 0)
         return Rational(
             (self.sign * self.num * other.denum)
             + (other.sign * other.num * self.denum),
