@@ -1,1 +1,0 @@
-{"player.lvl": 1, "player.exp": 60, "player.eq_weapon": ["0", "1"], "items": [["dagger.jpg", "2", "0"], ["longsword.png", "0", "1"], ["shortsword.jpg", "0", "1"]]}
